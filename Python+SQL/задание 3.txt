@@ -1,0 +1,80 @@
+
+import sqlite3
+conn = sqlite3.connect('data.db')
+cur = conn.cursor()
+
+# для задание № 3
+cur.execute("select wo_employee_rk,max(succses_operator) from (select wo_employee_rk,count(wo_employee_rk) succses_operator from call,action where wo_hit_rk = hit_rk and hit_status_result_id=3 group by wo_employee_rk);")
+suc_op = cur.fetchone()
+print(f'Самый «успешный» оператор имеет ключ {suc_op[0]} и совершил {suc_op[1]} «Дозвон, Успешно»')
+
+cur.execute("select wo_employee_rk,min(no_succses_operator) from (select wo_employee_rk,count(wo_employee_rk) no_succses_operator from call,action where wo_hit_rk = hit_rk and hit_status_result_id=3 group by wo_employee_rk);")
+no_suc_op = cur.fetchone()
+print(f'Самый «неуспешный» оператор имеет ключ {no_suc_op[0]} и совершил {no_suc_op[1]} «Дозвон, Успешно»')
+
+cur.execute("select wo_employee_rk,max(fail_succses_operator) from (select wo_employee_rk,count(wo_employee_rk) fail_succses_operator from call,action where wo_hit_rk = hit_rk and hit_status_result_id=1 group by wo_employee_rk);")
+max_fail_suc_op = cur.fetchone()
+print(f'Больше всего «Дозвон, Отказ» имеет оператор с ключом {max_fail_suc_op[0]}. Общее количество «Дозвон, Отказ»: {max_fail_suc_op[1]} ')
+
+cur.execute("select wo_employee_rk,min(fail_succses_operator) from (select wo_employee_rk,count(wo_employee_rk) fail_succses_operator from call,action where wo_hit_rk = hit_rk and hit_status_result_id=1 group by wo_employee_rk);")
+min_fail_suc_op = cur.fetchone()
+print(f'Меньше всего «Дозвон, Отказ» имеет оператор с ключом {min_fail_suc_op[0]}. Общее количество «Дозвон, Отказ»: {min_fail_suc_op[1]} ')
+
+cur.execute("select hid,max(pop_product) from (select hid,count(hid) pop_product from product where using_flg=1 group by hid);")
+most_pop_product = cur.fetchone()
+print(f'Самый популярный продукт,которым пользуются, имеет «Идентификатор продукта» {most_pop_product[0]}. Всего {most_pop_product[1]} «Флаг начала пользования продуктом»')
+cur.execute("select hid,min(no_pop_product) from (select hid,count(hid) no_pop_product from product where using_flg=1 group by hid);")
+no_pop_products = cur.fetchone()
+print(f'Самый непопулярный продукт,которым пользуются, имеет «Идентификатор продукта» {no_pop_products[0]}. Всего {no_pop_products[1]} «Флаг начала пользования продуктом»')
+cur.execute("select hid,count(*) from product where using_flg=1 group by hid;")
+other_product = cur.fetchall()
+print(f'Выборка по всем продуктам (hid,using_flg): {other_product}')
+cur.execute(f"select org_group_rk from emp_x_org_gr where employee_rk ={suc_op[0]};")
+most_suc_op_gp = cur.fetchall()
+print(f'Самый «успешный» оператор работает в группе c ключом: {most_suc_op_gp}')
+
+cur.execute(f"select org_group_rk from emp_x_org_gr where employee_rk ={no_suc_op[0]};")
+most_no_suc_op_gp = cur.fetchall()
+print(f'Самый «неуспешный» оператор работает в группе c ключом: {most_no_suc_op_gp}')
+
+
+cur.execute("select org_group_rk,max(succses_group) from (select org_group_rk,count(org_group_rk) succses_group from call,action,emp_x_org_gr where wo_hit_rk = hit_rk and hit_status_result_id=3 and wo_employee_rk = employee_rk group by org_group_rk);")
+suc_gr = cur.fetchone()
+print(f'Самая «успешная» группа имеет ключ {suc_gr[0]}. Участники этой группы совершили {suc_gr[1]} «Дозвон, Успех»')
+
+cur.execute("select org_group_rk,min(no_succses_group) from (select org_group_rk,count(org_group_rk) no_succses_group from call,action,emp_x_org_gr where wo_hit_rk = hit_rk and hit_status_result_id=3 and wo_employee_rk = employee_rk group by org_group_rk);")
+no_suc_gr = cur.fetchone()
+print(f'Самая «неуспешная» группа имеет ключ {no_suc_gr[0]}. Участники этой группы совершили {no_suc_gr[1]} «Дозвон, Успех»')
+
+cur.execute(f"select group_nm from [group] where org_group_rk ={suc_gr[0]};")
+nm_gr = cur.fetchone()
+print(f'Расшифровка ключа группы №{suc_gr[0]}: {nm_gr[0]}')
+
+cur.execute(f"select group_nm from [group] where org_group_rk ={no_suc_gr[0]};")
+no_suc_nm_gr = cur.fetchone()
+print(f'Расшифровка ключа группы №{no_suc_gr[0]}: {no_suc_nm_gr[0]}')
+
+cur.execute(f"select org_management_rk from [group] where org_group_rk ={suc_gr[0]};")
+suc_mn = cur.fetchone()
+print(f'Ключ управления, где работает самая «успешная» группа {suc_mn[0]}')
+cur.execute(f"select management_nm from mngmnt where org_management_rk ={suc_mn[0]};")
+nm_mng = cur.fetchone()
+print(f'Расшифровка ключа группы №{suc_mn[0]}: {nm_mng[0]}')
+
+cur.execute(f"select org_management_rk from [group] where org_group_rk ={no_suc_gr[0]};")
+no_suc_mn = cur.fetchone()
+print(f'Ключ управления, где работает самая «неуспешная» группа {no_suc_mn[0]}')
+cur.execute(f"select management_nm from mngmnt where org_management_rk ={no_suc_mn[0]};")
+no_nm_mng = cur.fetchone()
+print(f'Расшифровка ключа группы №{no_suc_mn[0]}: {no_nm_mng[0]}')
+
+cur.execute(f"select agent_login from call where wo_employee_rk ={suc_op[0]};")
+suc_op_log = cur.fetchone()
+cur.execute(f"select horoscope from horoscope where agent_login ='{suc_op_log[0]}';")
+suc_op_log_hor = cur.fetchone()
+print(f'Самый «успешный» оператор с ключом {suc_op[0]} и логином {suc_op_log[0]} по гороскопу {suc_op_log_hor[0]}')
+cur.execute(f"select agent_login from call where wo_employee_rk ={no_suc_op[0]};")
+no_suc_op_log = cur.fetchone()
+cur.execute(f"select horoscope from horoscope where agent_login ='{no_suc_op_log[0]}';")
+no_suc_op_log_hor = cur.fetchone()
+print(f'Самый «неуспешный» оператор с ключом {no_suc_op[0]} и логином {no_suc_op_log[0]} по гороскопу {no_suc_op_log_hor[0]}')
