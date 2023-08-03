@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"/>
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</head>
+<header>
+</header>
+<body>
+<style>
+.fruits{
+	border-collapse: separate;
+	border-spacing: 10px 10px;
+}
+td{
+	border: 1px solid grey;
+	padding: 10px 35px;
+	text-align: center;
+	color: white;
+	
+}
+.red{
+	background-color: #DB7093;
+	transition: 0.5s;
+}
+.green{
+	background-color: #3CB371;
+	transition: 0.5s;
+}
+.orange{
+	background-color: #FF8C00;
+	transition: 0.5s;
+}
+.yellow{
+	background-color: #DAA520;
+	transition: 0.5s;
+}
+.choice{
+	display: inline-block;
+	
+}
+.choice div{
+	float: left;
+	margin-left: 5px;
+	width: 100px;
+	height: 30px;
+	text-align: center;
+	padding-top: 10px;
+	border: 1px solid grey;
+	color: white;
+}
+#choice_color{
+	border: 0px solid grey;
+	color: black;
+}
+</style>
+
+
+<div class="choice">
+<div id="choice_color">Select color:</div>
+<div class="red" id="red" onclick="change_clr(this.id);">red</div>
+<div class="green" id="green" onclick="change_clr(this.id);">green</div>
+<div class="orange" id="orange" onclick="change_clr(this.id);">orange</div>
+<div class="yellow" id="yellow" onclick="change_clr(this.id);">yellow</div>
+</div> 
+<hr>
+<table class="fruits">
+<th></th><th>Fruits:</th><th></th>
+<tr>
+<td class="red">apple</td><td class="green">pear</td><td class="orange">orange</td>
+</tr>
+<tr>
+<td class="red">mango</td><td class="orange">mandarin</td><td class="yellow">pineapple</td>
+</tr><tr>
+<td class="green">avocado</td><td class="red">red peper</td><td class="green">green peper</td>
+</tr>
+</table>
+</body>
+<script>
+clr_count=0;
+function change_clr(color){
+console.log(color);	
+	if(clr_count == 0){
+		$('.'+color+'').css({"box-shadow": '0px 1px 20px 1px black'});
+		clr_count+=1;
+	}else{
+		$('.'+color+'').css({"box-shadow": '0px 0px 0px 0px black'});
+		clr_count-=1;
+	}
+};
+</script>
+
+<footer>
+
+</footer>
+</html>

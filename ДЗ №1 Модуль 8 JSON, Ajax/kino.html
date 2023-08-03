@@ -1,0 +1,190 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+</head>
+<header>
+</header>
+<body>
+<style>
+.block_poisk{
+	height: 100vh;
+	width: 100wh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+
+}
+.poisk{
+	display: block;
+	width: 230px;
+	height: 110px;
+	border: 1px solid black;
+	border-radius: 5px;
+	padding-left: 15px;
+	padding-top: 15px;
+}
+select{
+    width: 175px;
+}
+#all_result_search{
+	display: flex;
+	flex-wrap: wrap;
+}
+#srch_btn{
+	width: 205px;
+	margin: 15px 5px;
+}
+#detail_btn{
+	width: 110px;
+	margin: 5px 5px;
+}
+#result_search{
+	position: relative;
+	display: inline-block;
+	width: 250px;
+	height: 200px;
+	border: 1px solid black;
+	border-radius: 5px;
+	margin-left: 20px;
+}
+#result_search img{
+	position: absolute;
+	width: 80px;
+	height: 140px;
+	margin: 20px 130px 20px 20px;  
+}
+#short_about{
+	position: absolute;
+	left: 120px;
+	top: 10px;
+	width: 120px;
+	height: 130px;
+	border: 0px solid black;
+}
+#films_films{
+	display:none;
+}
+#ful_films_films{
+	display:none;
+}
+#full_info{
+	position: relative;
+	display: none;
+	width: 650px;
+	height: 400px;
+	border: 1px solid black;
+	border-radius: 5px;
+	margin-left: 20px;
+}
+#full_info img {
+	position: absolute;
+	width: 40%;
+	height: 90%;
+	margin: 10px 130px 10px 20px; 
+}
+#full_about{
+	position: absolute;
+	left: 320px;
+	top: 10px;
+	width: 320px;
+	height: auto;
+	border: 0px solid black;
+}
+#list_of_pages li{
+	display: inline;
+}
+</style>
+
+<script>
+let request = new XMLHttpRequest();
+function giv_me_film(page){
+	title_film = document.poisk_kino.title.value;
+	type_film = document.poisk_kino.type.value;
+	url= 'https://www.omdbapi.com/?s='+title_film+'&type='+type_film+'&page='+page+'&apikey=52f26ae3';
+	request.open("GET",url,true);
+
+
+	request.onload = function (){
+		var result = JSON.parse(request.response);
+		document.getElementById('all_result_search').innerHTML = '';
+		document.getElementById('films_films').style.display = 'block';
+		pages = Math.ceil(result.totalResults/4);
+		for(i=0;i<4;i++){
+			if(result.Search[i].Title != null){
+				final_result = '<div id="result_search"><img src="'+result.Search[i].Poster+'"title="'+result.Search[i].Title+'"><div id="short_about"><span>'+result.Search[i].Type+'</span><h4>'+result.Search[i].Title+'</h4><span>'+result.Search[i].Year+'</span><br/><input type="button" value="Details" id="detail_btn" onclick="show_me_info('+[i]+');"></div></div>';	
+				document.getElementById('all_result_search').innerHTML += final_result;
+			}else{
+				break;
+			}
+		}
+		document.getElementById('list_of_pages').innerHTML = ' ';	
+		for(i=1;i<=pages;i++){
+				
+			document.getElementById('list_of_pages').innerHTML += '<li><input button type="button" value="'+[i]+'" onclick="giv_me_film('+[i]+');"></li>';
+			
+		}
+		}
+
+	
+	request.send();
+};
+function show_me_info(num){
+	let request2 = new XMLHttpRequest();
+	var result = JSON.parse(request.response);
+	x = result.Search[num].imdbID
+	url2='https://www.omdbapi.com/?i='+x+'&plot=full&apikey=52f26ae3'
+	request2.open("GET",url2,true);
+	request2.onload = function(){
+		var result2 = JSON.parse(request2.response);
+
+		full_info_film = {
+			Poster: result2.Poster,
+			Title: result2.Title,
+			Year: result2.Year,
+			Genre: result2.Genre,
+			Country: result2.Country,
+			Director: result2.Director,
+			Writer: result2.Writer,
+			Actors: result2.Actors,
+			Awards: result2.Awards
+		}
+		document.getElementById('ful_films_films').style.display = 'block';
+		document.getElementById('full_info').style.display = 'inline-block';
+		document.getElementById('full_info').innerHTML = '<img src="'+full_info_film.Poster+'"title="'+full_info_film.Title+'"><div id="full_about"><p><span><b>Title: </b>'+full_info_film.Title+'</span></p><p><b>Released: </b>'+full_info_film.Year+'</span></p><p><b>Genre: </b>'+full_info_film.Genre+'</span></p><p><b>Country: </b>'+full_info_film.Country+'</span></p><p><b>Director: </b>'+full_info_film.Director+'</span></p><p><b>Writer: </b>'+full_info_film.Writer+'</span></p><p><b>Acotrs: </b>'+full_info_film.Actors+'</span></p><p><b>Awards: </b>'+full_info_film.Awards+'</span></p></div>';
+	}
+	request2.send();
+};
+</script>
+
+<div class="block_poisk">
+<form name="poisk_kino">
+<div>
+<center><b>Search:</b></center>
+<div class="poisk">
+<label>Title:
+<input type="text" id="title_move" name="title">
+</label><br/><br/>
+<label>Type:
+<select name="type"><option value="movie" selected>Movie</option>
+<option value="series">Series</option>
+<option value="episode">Episode</option>
+</select>
+</label>
+<input type="button" value="Search" id="srch_btn" onclick="giv_me_film(1);">
+</div>
+</div>
+</form>
+<span id="films_films"><h4>Films:</h4></span>
+<div id="all_result_search"></div>
+<div id="pages"><ul id="list_of_pages"></ul></div>
+<span id="ful_films_films"><h4>Films info:</h4></span>
+<div id="full_info"></div>
+</div>
+</body>
+
+
+<footer>
+
+</footer>
+</html>

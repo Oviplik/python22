@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<script>
+	function random_string(){
+		len = document.random_str.len_str.value;
+		num = document.random_str.numeric.value;
+		up_str = document.random_str.upp_let.value;
+		low_str = document.random_str.low_let.value;
+		if ($('#numeric').is(':checked')){
+			num = 'on';
+		} else {
+			num = 'off';
+		}
+		if ($('#upp_let').is(':checked')){
+			up_str = 'on';
+		} else {
+			up_str = 'off';
+		}
+		if ($('#low_let').is(':checked')){
+			low_str = 'on';
+		} else {
+			low_str = 'off';
+		}
+		if(num == 'on' && up_str != 'on' && low_str != 'on'){
+			my_str = '0123456789';
+			res_str='';
+			for(i=0;i<len;i++){
+				x=Math.floor(Math.random() * 10);
+				res_str+=my_str[x];
+				
+			}
+			document.getElementById('random_result').innerHTML += res_str;
+		}
+		if(num == 'on' && up_str == 'on' && low_str != 'on'){
+			my_str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+			res_str='';
+			for(i=0;i<len;i++){
+				x=Math.floor(Math.random() * 36);
+				res_str+=my_str[x];				
+			}
+			document.getElementById('random_result').innerHTML += res_str;
+		}
+		if(num == 'on' && up_str == 'on' && low_str == 'on'){
+			my_str = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+			res_str='';
+			for(i=0;i<len;i++){
+				x=Math.floor(Math.random() * 62);
+				res_str+=my_str[x];				
+			}
+			document.getElementById('random_result').innerHTML += res_str;
+		}
+		if(num != 'on' && up_str == 'on' && low_str != 'on'){
+			my_str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+			res_str='';
+			for(i=0;i<len;i++){
+				x=Math.floor(Math.random() * 26);
+				res_str+=my_str[x];				
+			}
+			document.getElementById('random_result').innerHTML += res_str;	
+		}
+		if(num != 'on' && up_str != 'on' && low_str == 'on'){
+			my_str = 'abcdefghijklmnopqrstuvwxyz';
+			res_str='';
+			for(i=0;i<len;i++){
+				x=Math.floor(Math.random() * 26);
+				res_str+=my_str[x];				
+			}
+			document.getElementById('random_result').innerHTML += res_str;
+		}
+	}
+</script>
+<div id="3_exc">
+<h4>Random String Generator</h4>
+<form name="random_str">
+String should be <input type="text" name="len_str" size="1"> characters long.<br/>
+<label><input type="checkbox" id="numeric" name="numeric"/>Numeric digits (0-9)</label><br/>
+<label><input type="checkbox" id="upp_let" name="upp_let"/>Uppercase letters (A-Z)</label><br/>
+<label><input type="checkbox" id="low_let" name="low_let"/>Lowercase letters (a-z)</label><br/><br/>
+<input type="button" value="Generate" onclick="random_string();">
+<hr>
+<h4>Result:</h4><span id="random_result"></span>
+</form>
+</body>
+</html>

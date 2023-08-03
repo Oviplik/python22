@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"/>
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</head>
+<header>
+</header>
+<body>
+<style>
+#fon{
+	display: flex;
+	width: 100wh;
+	height: 100vh;
+	box-sizing: border-box;
+	background-image: url('img/fon.jpg');
+	background-size: cover;
+	overflow: hidden;
+
+}
+#cat{
+	position:absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	overflow: hidden;
+}
+
+</style>
+
+<script>
+$(document).on('mousemove', function (e) {
+	var pos_left = e.pageX;
+	var pos_top  = e.pageY;
+	console.log($(window).width());
+	
+	if(pos_top>=$(window).height()-150){
+		pos_top = $(window).height()-150
+	}
+	if(pos_left>=$(window).width()-250){
+		pos_left = $(window).width()-250
+	}
+	$('#cat').css({"left": pos_left, "top": pos_top});
+});	
+</script>
+<div id="fon">
+<div id="cat"><img src="img/cat.gif" height="150px" width="300px"></div>
+</div>
+</body>
+
+
+<footer>
+
+</footer>
+</html>

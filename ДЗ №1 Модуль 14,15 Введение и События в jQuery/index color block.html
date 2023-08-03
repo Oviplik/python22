@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"/>
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</head>
+<header>
+</header>
+<body>
+<style>
+#box{
+	display: flex;
+	width: 100wh;
+	height: 100vh;
+	flex-wrap: wrap;
+	flex-direction: column;
+	box-sizing: border-box;
+}
+#blue_block{
+	display: block;
+	box-sizing: border-box;
+	width: 20%;
+	height: 40%;
+	max-height: 60%;
+	min-height: 40%;
+	background-color: #25c8fa;
+	border-bottom: 5px solid gray;
+
+}
+#pink_block{
+	display: block;
+	box-sizing: border-box;
+	width: 20%;
+	height: 60%;
+	max-height: 60%;
+	min-height: 40%;
+	background-color: #fa6ee3;
+	border: 0px solid gray;
+
+}
+
+#gray_block_btn{
+	width: 5px;
+	background-image: url('img/direct_l.jpg');
+	background-size: 0.33rem;
+	background-color: gray;
+	height: 100%;
+	transform: rotate(0deg);
+	
+}
+#green_block{
+	display: block;
+	box-sizing: border-box;
+	width: 80%;
+	height: 70%;
+	max-height: 90%;
+	min-height: 10%;
+	background-color: #4ca15a;
+	border-bottom: 5px solid gray;
+}
+#orange_block{
+	display: block;
+	box-sizing: border-box;
+	width: 80%;
+	height: 30%;
+	max-height: 90%;
+	min-height: 10%;
+	background-color: #f0ad26;
+	border: 0px solid gray;
+}
+</style>
+
+<script>$( "#blue_block" ).resizable();
+direct = 0;
+function resize_block() {	
+	if(direct == 0){
+		$('#green_block').css({"transition": '0.5s', "width": '100%'});
+		$('#orange_block').css({"transition": '0.5s', "width": '100%'});
+		$('#blue_block').css({"transition": '0.5s', "width": '0%'});
+		$('#pink_block').css({"transition": '0.5s', "width": '0%'});
+		$('#gray_block_btn').css({"background-image": 'url("img/direct_r.jpg")'});
+		direct += 1;
+	}else if(direct == 1){
+		$('#green_block').css({"width": '80%'});
+		$('#orange_block').css({"width": '80%'});
+		$('#blue_block').css({"width": '20%'});
+		$('#pink_block').css({"width": '20%'});
+		$('#gray_block_btn').css({"background-image": 'url("img/direct_l.jpg")'});		
+		direct -= 1;
+	}
+
+}
+
+</script>
+<div id="box">
+<div id="blue_block"></div>
+<div id="pink_block"></div>
+<div id="gray_block_btn"></div>
+<div id="green_block"></div>
+<div id="orange_block"></div>
+</div>
+</body>
+
+
+<footer>
+<script>
+$("#gray_block_btn").click(resize_block);	
+$('#blue_block').on("mousedown", function(){ 
+	$('#blue_block').css({"transition": '0.0s'});
+	$('#pink_block').css({"transition": '0.0s'});
+});
+$('#green_block').on("mousedown", function(){ 
+	$('#green_block').css({"transition": '0.0s'});
+	$('#orange_block').css({"transition": '0.0s'});
+});		
+$(function(){
+	$("#blue_block").resizable({
+    <!-- "alsoResizeReverse": '#pink_block', -->
+
+		handles: 's',
+		resize: function() {
+			$("#pink_block").outerHeight($("#box").innerHeight() - $("#blue_block").outerHeight());
+  }
+  });
+});
+$(function(){
+	$("#green_block").resizable({
+    <!-- "alsoResizeReverse": '#pink_block', -->
+
+		handles: 's',
+		resize: function() {
+			$("#orange_block").outerHeight($("#box").innerHeight() - $("#green_block").outerHeight());
+  }
+  });
+});
+</script>
+</footer>
+</html>

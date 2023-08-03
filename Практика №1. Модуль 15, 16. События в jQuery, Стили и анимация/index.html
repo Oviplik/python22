@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"/>
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</head>
+<header>
+</header>
+<body>
+<style>
+.fruits_names{
+	display: flex;
+	flex-wrap: wrap;
+	width: 600px;
+}
+.fruits{
+	box-sizing: border-box;
+	display: block;
+	float: left;
+	width: 100px;
+	height: 40px;
+	text-align: center;
+	padding-top: 10px;
+	border: 1px solid rgb(51, 173, 127);
+	color: white;
+	background-color: rgb(51, 173, 127);
+}
+.fruits_names > div.active{
+	box-sizing: border-box;
+	display: block;
+	float: left;
+	width: 100px;
+	height: 40px;
+	text-align: center;
+	padding-top: 10px;
+	border: 1px solid rgb(18, 95, 66);
+	color: white;
+	background-color: rgb(18, 95, 66);
+}
+.fruits:hover{
+	border: 1px solid rgb(18, 95, 66);
+	background-color: rgb(18, 95, 66);
+}
+.about_fruit{
+	display: block;
+	width: 100%;
+	border: 2px solid rgb(18, 95, 66);
+}
+#mango{
+	display: none;
+}
+#orange{
+	display: none;
+}
+#pineapple{
+	display: none;
+}
+#papaya{
+	display: none;
+}
+#grapefruit{
+	display: none;
+}
+#pear{
+	display: none;
+}
+.btn_modal { 
+	height: 70px;  
+	width: 300px;
+	border: 3px outset gray; 
+	background: #00bfff;
+	top: 50%;
+	left: 0;
+	right: 0;
+	font-size: 14px; 
+	margin: 0 auto;
+	z-index:10;
+	display: none;
+	position: fixed;
+	padding: 15px;
+	border: 1px solid #383838;
+}
+#btn_close{
+	width: 250px;
+	margin-top: 15px;
+}
+.maxvalue{
+	width: 0px;
+	display: block; 
+	height: 20px;
+	background-color: lightgray;
+	border: 1px solid black;
+	box-shadow: 0px 0.5px 10px 0.5px black;	
+}
+.value{
+	position: absolute;
+	display: block; 
+	width: 0px;
+	height: 20px;
+	transition: .5s;
+}
+.form_for_gist{
+	display: inline-block;
+	padding-top: 5px;
+	width: 270px;
+}
+input{ 
+	width: 250px;
+}
+.output{
+	display: none;
+	flex-wrap: nowrap;
+}
+.output_bottom_length{
+	display: block;
+	text-align: center;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+.headtitlegisto{
+	text-align: center;
+}
+</style>
+<script>
+	$( function() {
+	  var availableTags = ["ActionScript","AppleScript","ASP.NET","BASIC","C","C++","Haskell","Java","JavaScript","Lisp","Perl","PHP","Python","HTML","CSS","C#","SQL","MySQL"];
+	  $( "#tags" ).autocomplete({
+		source: availableTags
+	  });
+	} );
+</script>
+<p><b>Задание №1.</b></p>
+<div class="fruits_names">
+<div class="fruits" data-name="mango">Mango</div>
+<div class="fruits" data-name="orange">Orange</div>
+<div class="fruits" data-name="pineapple">Pineapple</div>
+<div class="fruits" data-name="papaya">Papaya</div>
+<div class="fruits" data-name="grapefruit">Grapefruit</div>
+<div class="fruits" data-name="pear">Pear</div>
+<div class="about_fruit" style="padding: 10px;">
+	<img src="img/mango.jpg" width="100px" style="float:left"><p style="text-align: center;"><b>Mango</b></p>Mangoes are juicy stone fruit (drupe) from numerous species of tropical trees belonging to the flowering plant genus mangifera.
+</div>
+<span id="mango"><img src="img/mango.jpg" width="100px" style="float:left"><p style="text-align: center;"><b>Mango</b></p>Mangoes are juicy stone fruit (drupe) from numerous species of tropical trees belonging to the flowering plant genus mangifera.</span>
+<span id="orange" ><img src="img/orange.jpg" width="100px" style="float:left"><p style="text-align: center;"><b>Orange</b></p>The average orange weighs 5 oz. (140 g). Like all citrus fruits, oranges are protected externally by a thick crust, which makes them quite resistant to transport.</span>
+<span id="pineapple" ><img src="img/pineapple.jpg" width="100px" style="float:left"><p style="text-align: center;"><b>Pineapple</b></p>Pineapple is a tropical fruit that are cone shaped with a waxy tough skin that has small spines protruding from it. The inside flesh is yellow with a hard core in the middle. The leafy top, hard skin and core are not eaten.</span>
+<span id="papaya" ><img src="img/papaya.jpg" width="100px" style="float:left"><p style="text-align: center;"><b>Papaya</b></p>Papaya, also called papaw or pawpaw, succulent fruit of a large plant of the family Caricaceae. Though its origin is rather obscure, the papaya may represent the fusion of two or more species of Carica native to Mexico and Central America.</span>
+<span id="grapefruit" ><img src="img/grapefruit.jpg" width="100px" style="float:left"><p style="text-align: center;"><b>Grapefruit</b></p>The grapefruit is a fruit with a spherical shape, slightly flattened, with a pale yellow or reddish smooth or rough skin. It is consumed mainly as fresh fruit, and has numerous digestive, stomach and antiseptic qualities.</span>
+<span id="pear"><img src="img/pear.jpg" width="100px" style="float:left"><p style="text-align: center;"><b>Pear</b></p>Pear are fruit produced and consumed around the world, growing on a tree and harvested in late summer into mid-autumn. The pear tree and shrub are a species of genus Pyrus /ˈpaɪrəs/, in the family Rosaceae, bearing the pomaceous fruit of the same name. Several species of pears are valued for their edible fruit and juices, while others are cultivated as trees.</span>
+</div> 
+<p><b>Задание №2.</b>
+<div class="btn_modal" style="text-align: center">
+	<span><b>Hello from Modal Window!</b></span><br/>
+	<button id="btn_close">Close</button>
+</div>
+<button id="btn_open" >Open modal window</button>
+</p>
+<p>
+<b>Задание №3.</b>
+<label for="tags">Tags: </label>
+<input id="tags">
+</p>
+<b>Задание №4.</b></br>
+<div class="form_for_gist">
+<form name="gistogramma">
+Заголовок графика:
+<input type="text" name="headtitle"/></br></br>
+Максимальное значение:
+<input type="number" id="max_val" name="maxvalue" value="0" min="0" max="600" placeholder = "Макс. значение 600"/></br></br>
+Подпись одного элемента графика:
+<input type="text" name="title_one"/></br></br>
+Значение для индикатора одного элемента графика:
+<input type="number" id="one_val" name="value_one" value="0" min="0" max="600" size="40" placeholder = "Макс. значение 600"/>
+<p><input class="create" type="button" value="Создать гистрограмму"/></p>
+</form>
+</div>
+<div class="gisto">
+<h4 class="headtitlegisto"></h4>
+<div id="output0" class="output"><span class="maxvalue"><span id="value0" class="value" style="background-color: #FF7F50;"></span></span><span class="num_value" style="margin-left: 15px"></span></div>
+<div id="output_bottom_length0" class="output_bottom_length"></div>
+<div id="output1" class="output"><span class="maxvalue"><span id="value1" class="value" style="background-color: #008080;"></span></span><span class="num_value" style="margin-left: 15px"></span></div>
+<div id="output_bottom_length1" class="output_bottom_length"></div>
+<div id="output2" class="output"><span class="maxvalue"><span id="value2" class="value" style="background-color: #DA70D6;"></span></span><span class="num_value" style="margin-left: 15px"></span></div>
+<div id="output_bottom_length2" class="output_bottom_length"></div>
+<div id="output3" class="output"><span class="maxvalue"><span id="value3" class="value" style="background-color: #00CED1;"></span></span><span class="num_value" style="margin-left: 15px"></span></div>
+<div id="output_bottom_length3" class="output_bottom_length"></div>
+<div id="output4" class="output"><span class="maxvalue"><span id="value4" class="value" style="background-color: #CD5C5C;"></span></span><span class="num_value" style="margin-left: 15px"></span></div>
+<div id="output_bottom_length4" class="output_bottom_length"></div>
+
+</div>
+</body>
+
+<script>
+$(".fruits").click(function(e){
+	var data_name = $(this).attr('data-name');
+	$('.active').removeClass('active');
+	$(this).addClass('active');
+	var fruit_img = $('#'+data_name+'').html();
+	$('.about_fruit').html(fruit_img);
+
+});
+$("#btn_open").on( "click", function() {
+	$('.btn_modal').toggle();
+});	
+$("#btn_close").on( "click", function() {
+	$('.btn_modal').toggle();
+});	
+count_gisto=-1;
+var arr = []
+$(".create").on( "click", function() {
+	headtitle = document.gistogramma.headtitle.value;
+	maxvalue = document.gistogramma.maxvalue.value;
+	title_one_element = document.gistogramma.title_one.value;
+	value_one_element = document.gistogramma.value_one.value;
+	var gistogram = {
+		"header": headtitle,
+		"maxvalue": maxvalue,
+		"data": arr
+	}
+	count_gisto+=1;
+	if(count_gisto>=4){
+		 $(this).prop("disabled",true);
+	}	
+	arr.push([{"title": title_one_element,"value": value_one_element}]);
+	$('#max_val').prop("disabled",true);
+	$(this).val('Добавить гистрограмму'+count_gisto+'/4');
+	$.each(gistogram.data,function(i,val){
+		$("#output"+count_gisto+"").css({"display":'flex'});
+		$(".headtitlegisto"+count_gisto+"").css({"width":gistogram.maxvalue+'px'});
+		$(".headtitlegisto"+count_gisto+"").text(gistogram.header);
+		$(".maxvalue").css({"width":gistogram.maxvalue+'px'});
+		$("#value"+count_gisto+"").css({"width":gistogram.data[i][0].value+'px'});
+		$(".num_value").text(gistogram.maxvalue);
+		$("#output_bottom_length"+count_gisto+"").css({"width":gistogram.data[i][0].value+'px'});
+		$("#output_bottom_length"+count_gisto+"").text(gistogram.data[i][0].title);
+
+	});
+});	
+document.getElementById('max_val').onkeyup = function() {
+	if(this.value > 600){
+		this.value = 600;
+	}else if(this.value < 0){
+		this.value = 0;
+	}
+};
+document.getElementById('one_val').onkeyup = function() {
+	maxv = document.getElementById('max_val').value;
+	if(this.value > maxv){
+		this.value = maxv;
+	}else if(this.value < 0){
+		this.value = 0;
+	}
+};
+</script>
+
+<footer>
+
+</footer>
+</html>

@@ -1,0 +1,79 @@
+
+footer {
+	background: #eeeeee;
+}
+body {
+	background: #eeeeee;
+	margin: 0 0 0 -8px;
+}
+header {
+	background: #eeeeee;
+	color: black;
+	text-align: left;
+}
+
+nav {
+	position: fixed;
+	top: 0;
+	margin-left: -10px;
+	float: left;
+	min-height: 100vh;
+}
+dt {
+	padding-left: 10px;
+}
+
+span {
+	display: none;
+	/* visibility: hidden; */
+	/* opacity: 1; */
+	z-index: 10;
+}
+	
+ul {
+	color: white;
+	margin: 10px 0 0 -30px;
+}
+li {
+
+	width: 165px;
+	list-style-position: inside;
+	white-space: pre;
+	word-spacing: 3px;
+	height: 35px;
+	line-height: 2.1em;
+	list-style-type: none;
+	color: white;
+}
+
+a {
+	text-decoration: none;
+	color: white;
+}
+
+.lorem_ipsu {
+	position: relative;
+	text-align: justify;
+	z-index: 1;
+}
+
+#menu_left {
+	position: absolute;
+	background-color: #ADADAD;
+	border-collapse: collapse;
+	width: 70px;
+	height: 100vh;
+	text-align: left;
+	transition : width 0.5s;
+	z-index: 10;
+	display: block;
+	visibility: visible;
+	opacity: 1;	
+}
+
+
+	
+table, tr, td {
+	border: 0px solid black;
+	vertical-align: top;
+}

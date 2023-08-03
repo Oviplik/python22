@@ -1,0 +1,354 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"/>
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</head>
+<header>
+</header>
+<body>
+<style>
+.body_player_gallery{
+	position:relative;
+	display: block;
+	width: 500px;
+	height: 510px;
+	border: 1px solid gray;
+	background-color: rgb(236, 217, 191);
+	box-shadow: 0px 0.5px 10px 0.5px black;	
+	transition: .5s;
+}
+.screen_gallery{
+	position: relative;
+	width: 500px;
+	height: 430px;
+	border-bottom: 1px solid gray;
+	text-align: center;
+	transition: .5s;
+}
+.point_img{
+	display: inline-block;
+	width: 100%;
+	height: 20px;
+	text-align: center;
+	border-bottom: 1px solid gray;	
+}
+.point_img a span{
+	padding: 0;
+	font-size: 20px;
+	line-height: 1;
+	color: black;
+	transition: .5s;
+}
+.point_img a > span:before {
+	content: '●';
+}
+.point_img a > span.active {
+	color: gold;
+}
+.btn_player{
+	display: block;
+	width: 500px;
+	height: auto;
+	text-align: center;
+
+}
+.btn_player ul{
+	padding-inline-start: 0px;
+}
+.btn_player ul li{
+	display: inline;
+}
+.zoom_img{
+	position: absolute;
+	display: block;
+	width: 32px;
+	height: 32px;
+	z-index: 2;
+	right: 0px;
+	top: 0px;
+}
+.screen_gallery img{
+	max-width: 100%;
+	max-height: 100%;
+	position: absolute;
+    margin: auto;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+}
+a{
+	text-decoration: none;
+}
+</style>
+<div class="body_player_gallery">
+<div class="zoom_img"><img src="img/full_screen.png" width="32px" height="32px"></div>
+<div class="screen_gallery"></div>
+<div class="btn_player"><div class="point_img"></div>
+	<ul>
+	<li id="prev_btn"><img src="img/prev_img.png" width="32px" height="32px"></li>
+	<li id="first_btn"><img src="img/first_img.png" width="32px" height="32px"></li>
+	<li id="play_btn"><img id="startBtn" src="img/play.png" width="32px" height="32px"></li>
+	<li id="last_btn"><img src="img/last_img.png" width="32px" height="32px"></li>
+	<li id="next_btn"><img src="img/next_img.png" width="32px" height="32px"></li>
+	</ul>
+</div>
+
+</div>
+
+</body>
+
+<script>
+var img_in_gallery = ['gallery/img1.jpg','gallery/img2.jpg','gallery/img3.jpg','gallery/img4.jpg','gallery/img5.gif','gallery/img6.gif'];
+var img = 0;
+var index_img=0;
+
+$("document").ready(function() {
+	$(".screen_gallery").html('<img class="images" src="'+img_in_gallery[index_img]+'" width="500px" height="430px">');
+});
+$(".point_img").ready(function() {
+	let count_imgs = img_in_gallery.length;
+	for(i=0;i<count_imgs;i++){
+		$(".point_img").append('<a href="#" onclick="numImg('+i+');"><span class="point_link" id="num_img'+i+'"> </span></a>');
+	}
+	$(".point_link").first().addClass('active');
+});
+function numImg(num){
+	index_img = num;
+	$(".point_link").removeClass('active');
+	$("#num_img"+index_img+"").addClass('active');
+	if($('.zoom_img').hasClass('active')){
+		$(".screen_gallery").html('<img class="images" src="'+img_in_gallery[num]+'">');
+	}else{
+		$(".screen_gallery").html('<img class="images" src="'+img_in_gallery[num]+'" width="500px" height="430px">');
+	}
+};
+
+count_play=false;
+$("#play_btn").on('click', function(){	
+	if(count_play==false){
+		$("#play_btn").html('<img id="play_btn" src="img/pause.png" width="32px" height="32px">');
+		count_play=true;
+		window.setInterval(function(){
+			if(!(count_play==false)){
+				$("#next_btn").trigger('click');
+			}			
+		},1000)
+	}else{
+		$("#play_btn").html('<img id="play_btn" src="img/play.png" width="32px" height="32px">');
+		count_play=false;
+	}
+		
+});
+
+
+$("#next_btn").on('click', function() {	
+    if (index_img < img_in_gallery.length-1) {
+		index_img+=1;
+		$(".point_link").removeClass('active');
+		$("#num_img"+index_img+"").addClass('active');
+        img = img_in_gallery[index_img];
+		if($('.zoom_img').hasClass('active')){
+			$(".screen_gallery").html('<img class="images" src="'+img+'">');
+		}else{
+			$(".screen_gallery").html('<img class="images" src="'+img+'" width="500px" height="430px">');
+		}
+    }
+});
+$("#prev_btn").on('click', function() {	
+    if (index_img > 0) {
+		index_img-=1;
+		$("span.active").removeClass('active');
+		$("#num_img"+index_img+"").addClass('active');
+        img = img_in_gallery[index_img];
+		if($('.zoom_img').hasClass('active')){
+			$(".screen_gallery").html('<img class="images" src="'+img+'">');
+		}else{
+			$(".screen_gallery").html('<img class="images" src="'+img+'" width="500px" height="430px">');
+		}
+    }	
+});
+$("#last_btn").on('click', function() {
+	$(".point_link").removeClass('active');
+	$(".point_link").last().addClass('active');
+	index_img = img_in_gallery.length-1;
+	var last_img = img_in_gallery[index_img];
+	if($('.zoom_img').hasClass('active')){
+		$(".screen_gallery").html('<img class="images" src="'+last_img+'">');	
+	}else{
+		$(".screen_gallery").html('<img class="images" src="'+last_img+'" width="500px" height="430px">');
+	}
+});
+$("#first_btn").on('click', function() {
+	$(".point_link").removeClass('active');
+	$(".point_link").first().addClass('active');
+	var first_img = img_in_gallery[0];
+	index_img = 0;
+	if($('.zoom_img').hasClass('active')){
+		$(".screen_gallery").html('<img class="images" src="'+first_img+'">');
+	}else{
+		$(".screen_gallery").html('<img class="images" src="'+first_img+'" width="500px" height="430px">');
+	}
+});
+active_class=false;
+$(".zoom_img").on('click', function(){
+	var need_img=$(".images").attr('src');
+	if(active_class == false){
+		active_class = true;
+		$(this).addClass('active');
+		$(".zoom_img").html('<img src="img/small_screen.png" width="32px" height="32px">');		
+		var need_img=$(".images").attr('src');
+		$(".body_player_gallery").css({"width":'95vw',"height":'100vh'});
+		$(".screen_gallery").css({"width":'95vw',"height":'90vh'});
+		$(".btn_player").css({"width":'95vw'});
+		$(".screen_gallery").html('<img class="images" src="'+need_img+'">');
+	}else{
+		active_class = false;
+		$(this).removeClass('active');
+		$(".zoom_img").html('<img src="img/full_screen.png" width="32px" height="32px">');	
+		$(".body_player_gallery").css({"width":'500px',"height":'510px'});
+		$(".screen_gallery").css({"width":'500px',"height":'430px'});
+		$(".btn_player").css({"width":'500px'});
+		$(".screen_gallery").html('<img class="images" src="'+need_img+'">');
+	}	
+});
+
+
+<!-- count_play=false; -->
+<!-- $("#play_btn").on('click', function(){	 -->
+	<!-- if(count_play==false){ -->
+		<!-- $("#play_btn").html('<img id="play_btn" src="img/pause.png" width="32px" height="32px">'); -->
+		<!-- count_play=true; -->
+		<!-- window.setInterval(function(){ -->
+			<!-- if(!(count_play==false)){ -->
+				<!-- $("#next_btn").trigger('click'); -->
+			<!-- }			 -->
+		<!-- },1000) -->
+	<!-- }else{ -->
+		<!-- $("#play_btn").html('<img id="play_btn" src="img/play.png" width="32px" height="32px">'); -->
+		<!-- count_play=false; -->
+	<!-- } -->
+		
+<!-- }); -->
+
+
+<!-- $("#next_btn").on('click', function() {	 -->
+	<!-- var next_img = $.inArray(img, img_in_gallery) + 1; -->
+    <!-- if (index_img < img_in_gallery.length) { -->
+        <!-- img = img_in_gallery[next_img]; -->
+		<!-- if($('.zoom_img').hasClass('active')){ -->
+			<!-- $(".screen_gallery").html('<img class="images" src="'+img+'" width="100%" height="100%">'); -->
+		<!-- }else{ -->
+			<!-- $(".screen_gallery").html('<img class="images" src="'+img+'" width="500px" height="430px">'); -->
+		<!-- } -->
+    <!-- }	 -->
+<!-- }); -->
+<!-- $("#prev_btn").on('click', function() { -->
+	<!-- var prev_img = $.inArray(img, img_in_gallery) -1; -->
+    <!-- if (prev_img > -1) { -->
+        <!-- img = img_in_gallery[prev_img]; -->
+		<!-- if($('.zoom_img').hasClass('active')){ -->
+			<!-- $(".screen_gallery").html('<img class="images" src="'+img+'" width="100%" height="100%">'); -->
+		<!-- }else{ -->
+			<!-- $(".screen_gallery").html('<img class="images" src="'+img+'" width="500px" height="430px">'); -->
+		<!-- } -->
+    <!-- }	 -->
+<!-- }); -->
+<!-- $("#last_btn").on('click', function() { -->
+	<!-- var last_img = $(img_in_gallery).get(-1); -->
+	<!-- if($('.zoom_img').hasClass('active')){ -->
+		<!-- $(".screen_gallery").html('<img class="images" src="'+last_img+'" width="100%" height="100%">');	 -->
+	<!-- }else{ -->
+		<!-- $(".screen_gallery").html('<img class="images" src="'+last_img+'" width="500px" height="430px">'); -->
+	<!-- } -->
+<!-- }); -->
+<!-- $("#first_btn").on('click', function() { -->
+	<!-- var first_img = img_in_gallery[0]; -->
+	<!-- if($('.zoom_img').hasClass('active')){ -->
+		<!-- $(".screen_gallery").html('<img class="images" src="'+first_img+'"  width="100%" height="100%">'); -->
+	<!-- }else{ -->
+		<!-- $(".screen_gallery").html('<img class="images" src="'+first_img+'" width="500px" height="430px">'); -->
+	<!-- } -->
+<!-- }); -->
+
+
+
+<!-- $(function() { -->
+    <!-- $('.body_player_gallery').resizable({ -->
+        <!-- alsoResize: ".btn_player,.screen_gallery,.screen_gallery img" -->
+		
+    <!-- });	 -->
+<!-- }); -->
+
+
+// $(".fruits").click(function(e){
+// 	var data_name = $(this).attr('data-name');
+// 	$('.active').removeClass('active');
+// 	$(this).addClass('active');
+// 	var fruit_img = $('#'+data_name+'').html();
+// 	$('.about_fruit').html(fruit_img);
+
+// });
+// $("#btn_open").on( "click", function() {
+// 	$('.btn_modal').toggle();
+// });	
+// $("#btn_close").on( "click", function() {
+// 	$('.btn_modal').toggle();
+// });	
+// count_gisto=-1;
+// var arr = []
+// $(".create").on( "click", function() {
+// 	headtitle = document.gistogramma.headtitle.value;
+// 	maxvalue = document.gistogramma.maxvalue.value;
+// 	title_one_element = document.gistogramma.title_one.value;
+// 	value_one_element = document.gistogramma.value_one.value;
+// 	var gistogram = {
+// 		"header": headtitle,
+// 		"maxvalue": maxvalue,
+// 		"data": arr
+// 	}
+// 	count_gisto+=1;
+// 	if(count_gisto>=4){
+// 		 $(this).prop("disabled",true);
+// 	}	
+// 	arr.push([{"title": title_one_element,"value": value_one_element}]);
+// 	$('#max_val').prop("disabled",true);
+// 	$(this).val('Добавить гистрограмму'+count_gisto+'/4');
+// 	$.each(gistogram.data,function(i,val){
+// 		$("#output"+count_gisto+"").css({"display":'flex'});
+// 		$(".headtitlegisto"+count_gisto+"").css({"width":gistogram.maxvalue+'px'});
+// 		$(".headtitlegisto"+count_gisto+"").text(gistogram.header);
+// 		$(".maxvalue").css({"width":gistogram.maxvalue+'px'});
+// 		$("#value"+count_gisto+"").css({"width":gistogram.data[i][0].value+'px'});
+// 		$(".num_value").text(gistogram.maxvalue);
+// 		$("#output_bottom_length"+count_gisto+"").css({"width":gistogram.data[i][0].value+'px'});
+// 		$("#output_bottom_length"+count_gisto+"").text(gistogram.data[i][0].title);
+
+// 	});
+// });	
+// document.getElementById('max_val').onkeyup = function() {
+// 	if(this.value > 600){
+// 		this.value = 600;
+// 	}else if(this.value < 0){
+// 		this.value = 0;
+// 	}
+// };
+// document.getElementById('one_val').onkeyup = function() {
+// 	maxv = document.getElementById('max_val').value;
+// 	if(this.value > maxv){
+// 		this.value = maxv;
+// 	}else if(this.value < 0){
+// 		this.value = 0;
+// 	}
+// };
+</script>
+
+<footer>
+
+</footer>
+</html>

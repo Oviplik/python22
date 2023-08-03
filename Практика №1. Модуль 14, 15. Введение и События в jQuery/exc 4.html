@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"/>
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</head>
+<header>
+</header>
+<body>
+<style>
+.rating {
+	display: inline-block;
+	font-size: 0;
+}
+.rating span {
+	padding: 0;
+	font-size: 20px;
+	line-height: 1;
+	color: lightgrey;
+}
+.rating > span:before {
+	content: '★';
+}
+.rating > span.active_hover {
+	color: gold;
+}
+.rating > span.active {
+	color: gold;
+}
+.rating > span.other {
+	color: black;
+}
+</style>
+<h4>Star Rating:</h4>
+<div class="rating">
+	<span class="no_active"></span>	
+	<span class="no_active"></span>    
+	<span class="no_active"></span>  
+	<span class="no_active"></span>    
+	<span class="no_active"></span>
+</div>
+</body>
+<script>
+$(".no_active").hover(function(){
+	$(this).prevAll().addBack().addClass('active_hover');
+});
+$(".no_active").mouseout(function(){
+    $(this).prevAll().addBack().removeClass('active_hover'); 
+}); 
+$(".no_active").click(function(e){
+	$(this).prevAll().addBack().removeClass('other'); 
+	$(this).prevAll().addBack().addClass('active');
+	$(this).nextAll().addClass('other');
+});	
+
+</script>
+
+<footer>
+
+</footer>
+</html>

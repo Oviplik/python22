@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<head><link rel="stylesheet" href="style1.2.css"> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
+<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css"/>
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+
+<body> <!-Тело сайта->
+
+
+
+<table>
+<tr><td id="menu_left"><nav>
+<ul><dt><a href="#" id="show_menu">MENU</a></dt>
+<li class="edit"><a href="#"><img src="img/edit.png" width="33px" style="float: left; margin: 0px 0px 0px 15px"><span class="link">EDIT</span></a></li>
+<li class="fav"><a href="#"><img src="img/favorites.png" width="33px" style="float: left; margin: 0px 0px 0px 15px"><span class="link">FAVORITES</span></a></li>
+<li class="his"><a href="#"><img src="img/history.png" width="33px" style="float: left; margin: 0px 0px 0px 15px"><span class="link">HISTORY</span></a></li>
+<li class="sec"><a href="#"><img src="img/security.png" width="33px" style="float: left; margin: 0px 0px 0px 15px"><span class="link">SECURITY</span></a></li>
+<li class="set"><a href="#"><img src="img/settings.png" width="33px" style="float: left; margin: 0px 0px 0px 15px"><span class="link">SETTINGS</span></a></li>
+</ul>
+</nav>
+
+</td><td>
+<div class="lorem_ipsu">
+<h1>WHAT IS THIS...?</h1>
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque purus tortor, tempus varius eros ut, tincidunt lacinia nisl. Fusce a nisl et leo pretium fringilla. Nulla blandit tempor tellus eget rutrum. Morbi eget ligula laoreet, auctor sem at, lobortis nisi. Quisque consequat tempus eleifend. Ut ut pretium sem, ut pretium quam. Curabitur orci ex, gravida sed semper vitae, vestibulum vitae risus. Duis non elementum mauris. Sed sem ex, sollicitudin vel erat viverra, tristique aliquam felis. Sed tortor turpis, mollis ut porttitor vitae, convallis non diam. Praesent venenatis est vitae nunc cursus congue. Integer elit odio, mollis in arcu nec, pharetra vehicula dolor. Donec efficitur massa a molestie iaculis. Sed rutrum leo pretium velit ultrices finibus sed id dolor. Sed sed libero sed nisl viverra tristique ut facilisis ligula. Pellentesque suscipit malesuada lacus, scelerisque consequat lacus sollicitudin vel.
+</p>
+<h1>WHY DO WE USE IT...?</h1>
+<p>
+Donec vestibulum ornare sem, sit amet commodo ligula fringilla in. Nam at pulvinar erat. Integer a suscipit ante, vel elementum nisl. Nullam interdum et lectus sit amet pharetra. Quisque augue mauris, mollis pellentesque ex eu, condimentum mattis est. In accumsan sollicitudin nisl ac porta. Donec ac augue egestas, efficitur magna et, euismod turpis. Phasellus vitae ligula eu enim volutpat imperdiet ac in lectus. Nulla dapibus, lacus in viverra commodo, augue libero varius tortor, nec tincidunt nunc ante id lacus. Ut vitae feugiat eros. Quisque auctor tellus vitae leo rhoncus euismod. Phasellus commodo ornare rhoncus. Morbi hendrerit imperdiet leo, ut tincidunt risus vehicula eget. Duis sed varius nunc. Curabitur porttitor cursus erat non posuere.
+</p>
+<h1>WHERE DOES IT COME FROM...?</h1>
+<p>
+Nam mattis nunc et dapibus aliquam. Integer nec rhoncus enim. Pellentesque eu gravida risus. Ut nec diam leo. Quisque rutrum tincidunt posuere. In pellentesque enim quis sodales scelerisque. Nam aliquam est ligula, a volutpat sapien interdum eget. Donec tortor sem, malesuada eu cursus eu, maximus et nisi. Phasellus hendrerit elit erat, et eleifend erat facilisis eget. In iaculis, ex vitae varius sollicitudin, dui purus volutpat ipsum, sit amet malesuada tortor odio vitae eros. Sed consequat tincidunt nisl.
+</p>
+</div>
+</td>
+</table>
+
+<footer> <!-Подошва сайта->
+</footer>
+
+<script>
+count=0;
+$("#show_menu").on( "click", function() {
+	$(".link").toggle();
+	if(count==0){
+		$('#menu_left').css({"width": '170'});
+		count+=1;
+	}else if(count==1){
+		$('#menu_left').css({"width": '70'});
+		count-=1;
+	}
+});
+
+</script>
+</body>
+
