@@ -1,0 +1,27 @@
+<html>
+    <head>
+        {% if title %}
+        <title>{{ title }} - appflask</title>
+        {% else %}
+        <title>appflask</title>
+        {% endif %}
+    </head>
+    <body>
+        <div>
+            <a href="{{ url_for('index') }}">Все рестораны</a>
+            <a href="{{ url_for('register') }}">Добавить ресторан</a>
+            <a href="{{ url_for('search') }}">Поиск по БД</a>
+        </div>
+        <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </body>
+</html>
