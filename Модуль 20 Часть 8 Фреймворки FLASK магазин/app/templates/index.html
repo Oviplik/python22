@@ -1,0 +1,91 @@
+<html>
+  <head>
+    <title>{{title}}</title>
+  </head>
+  <style>
+
+  </style>
+  <body>
+      {% extends "base.html" %}
+        {% block content %}
+            {%if title=="Sellers"%}
+                <h1>Список всех продавцов:</h1><span style="float: right"><a href="{{ url_for('register_seller') }}">Добавить продавца</a></span>
+                <table>
+                    <tr valign="middle">
+                        <th>ID</th>
+                        <th>Фамилия</th>
+                        <th>Имя</th>
+                        <th>Номер телефона</th>
+                        <th>Email</th>
+                        <th>Дата приёма на работу</th>
+                        <th>Должность</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    {% for seller in sellers %}
+                        <div>
+                            {%include '_sellers.html'%}
+                        </div>
+                    {% endfor %}
+                </table>
+            {%endif%}
+            {%if title=="Buyers"%}
+                <h1>Список всех покупателей:</h1><span style="float: right"><a href="{{ url_for('register_buyer') }}">Добавить покупателя</a></span>
+                <table>
+                    <tr valign="middle">
+                        <th>ID</th>
+                        <th>Фамилия</th>
+                        <th>Имя</th>
+                        <th>Номер телефона</th>
+                        <th>Email</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    {% for buyer in buyers %}
+                        <div>
+                            {%include '_buyers.html'%}
+                        </div>
+                    {% endfor %}
+                </table>
+            {%endif%}
+            {%if title=="Goods"%}
+                <h1>Список всех товаров:</h1><span style="float: right"><a href="{{ url_for('register_good') }}">Добавить товар</a></span>
+                <table>
+                    <tr valign="middle">
+                        <th>ID</th>
+                        <th>Название товара</th>
+                        <th class="about_good">Описание товара</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    {% for good in goods %}
+                        <div>
+                            {%include '_goods.html'%}
+                        </div>
+                    {% endfor %}
+                </table>
+            {%endif%}
+            {%if title=="Sales"%}
+                <h1>Продажи товаров:</h1><span style="float: right"><a href="{{ url_for('register_sale') }}">Добавить продажу</a></span>
+                <table>
+                    <tr valign="middle">
+                        <th>ID</th>
+                        <th>ID покупателя</th>
+                        <th>ID продавца</th>
+                        <th>ID товара</th>
+                        <th>Дата продажи</th>
+                        <th>Цена товара</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    {% for sale in sales %}
+                        <div>
+                            {%include '_sales.html'%}
+                        </div>
+                    {% endfor %}
+                </table>
+            {%endif%}
+        {% endblock %}
+
+  </body>
+</html>

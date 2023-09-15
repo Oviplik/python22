@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+</head>
+<body>
+  {% extends "base.html" %}
+
+{% block content %}
+    <h1>Информация о покупателе и его покупках</h1>
+    <table>
+        <tr valign="middle">
+        {% for i in buyer %}
+            <td>{{i.id}}</td>
+            <td>{{i.surname}}</td>
+            <td>{{i.name}}</td>
+            <td>{{i.phone}}</td>
+            <td>{{i.email}}</td>
+        {% endfor %}
+        </tr>
+    </table>
+  <p></p>
+    <table>
+        <tr valign="middle">
+            <th>ID</th>
+            <th>ID продавца</th>
+            <th>ID товара</th>
+            <th>Дата продажи</th>
+            <th>Цена товара</th>
+        </tr>
+        {% for sale in sales %}
+        <div>
+            {%include '_buyes_profil.html'%}
+        </div>
+        {% endfor %}
+    </table>
+{% endblock %}
+
+</body>
+</html>

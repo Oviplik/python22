@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}}}</title>
+</head>
+<body>
+  {% extends "base.html" %}
+
+{% block content %}
+    <h1>Добавить новую продажу</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.buyer_id.label }}<br>
+            {{ form.buyer_id(size=32) }}<br>
+            {% for error in form.buyer_id.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.seller_id.label }}<br>
+            {{ form.seller_id(size=32) }}<br>
+            {% for error in form.seller_id.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.good_id.label }}<br>
+            {{ form.good_id(size=32) }}<br>
+            {% for error in form.good_id.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.date_sel.label }}<br>
+            {{ form.date_sel(size=32) }}<br>
+            {% for error in form.date_sel.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.price_sel.label }}<br>
+            {{ form.price_sel(size=32) }}<br>
+            {% for error in form.price_sel.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}
+
+</body>
+</html>

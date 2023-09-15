@@ -1,0 +1,49 @@
+table{
+	border: 1px solid black;
+	border-collapse: collapse; /*collapse|separate*/
+	text-align: center;
+	vertical-align: middle;
+	width: 100%;
+
+}
+tr {
+	height: 35px;
+}
+tr:nth-child(odd){
+	background-color: #d5d5d5;
+}
+tr:nth-child(even){
+	border-top: 0px solid black;
+}
+th {
+	background-color: #88dbea;
+	height: 35px;
+	position: sticky;
+	top: 0;
+
+}
+.about_good{
+    width: 50%;
+}
+td:first-child {
+	background-color: #88dbea;
+	font-weight: bold;
+	position: sticky;
+	left: 0;
+}
+
+.edit_prof {
+    background-color: #32CD32;
+    height: 25px;
+    border: 1px solid #2E8B57;
+    border-radius: 5px;
+
+}
+
+.del_prof {
+    background-color: #DC143C;
+    height: 25px;
+    border: 1px solid #8B0000;
+    border-radius: 5px;
+
+}

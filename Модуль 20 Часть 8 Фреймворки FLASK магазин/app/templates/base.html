@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+        {% if title %}
+        <title>{{ title }} - appflask</title>
+        {% else %}
+        <title>appflask</title>
+        {% endif %}
+    </head>
+    <body>
+        <div>
+            <a href="{{ url_for('index') }}">Главная</a>
+            <a href="{{url_for('sellers')}}">Продавцы</a>
+            <a href="{{url_for('buyers')}}">Покупатели</a>
+            <a href="{{url_for('goods')}}">Товары</a>
+            <a href="{{url_for('sales')}}">Продажи</a>
+        </div>
+        <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </body>
+</html>

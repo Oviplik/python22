@@ -1,0 +1,10 @@
+
+    <tr valign="middle">
+        <td>{{buyer.id}}</td>
+        <td>{{buyer.surname}}</td>
+        <td>{{buyer.name}}</td>
+        <td>{{buyer.phone}}</td>
+        <td>{{buyer.email}}</td>
+        <td><form style="display: inline;" action="/edit_buyer/{{buyer.id}}" method="post"><input class='edit_prof' type="submit" value="Изменить"></form></td>
+        <td><form style="display: inline;" action="/delete_buyer/{{buyer.id}}" method="post"><input class='del_prof' type="submit" value="Удалить"></form></td>
+    </tr>
