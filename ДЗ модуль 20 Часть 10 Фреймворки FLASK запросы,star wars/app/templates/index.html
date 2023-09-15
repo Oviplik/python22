@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+        <title>{{title}}</title>
+	</head>
+    <style>
+        .menu{
+            display: inline-block;
+            width: 100%;
+        }
+        .menu_cat{
+            float: left;
+            margin-left: 50px;
+        }
+    </style>
+    <body>
+		{%block content%}
+        <h1>«Звёздные войны»</h1><hr>
+        {%if title=='Main'%}
+            <div class="menu">
+                <div class="menu_cat">
+                    <h3>Эпизоды:</h3>
+                    <ol>
+                        {% set count = namespace(value=0) %}
+                        {%for i in listFilms%}
+                            {% set count.value = count.value + 1 %}
+                            <li><a href="{{url_for('about_film', id=count.value)}}">{{i}}</a></li>
+                        {%endfor%}
+                    </ol>
+                </div>
+                <div class="menu_cat">
+                    <h3>Герои:</h3>
+                    <ol>
+                        {% set count = namespace(value=0) %}
+                        {%for i in listPeoples%}
+                            {% set count.value = count.value + 1 %}
+                            <li><a href="{{url_for('about_people', id=count.value)}}">{{i}}</a></li>
+                        {%endfor%}
+                    </ol>
+                </div>
+                <div class="menu_cat">
+                    <h3>Планеты:</h3>
+                    <ol>
+                        {% set count = namespace(value=0) %}
+                        {%for i in listPlanets%}
+                            {% set count.value = count.value + 1 %}
+                            <li><a href="{{url_for('about_planet', id=count.value)}}">{{i}}</a></li>
+                        {%endfor%}
+                    </ol>
+                </div>
+                <div class="menu_cat">
+                    <h3>Корабли:</h3>
+                    <ol>
+                        {% set count = namespace(value=1) %}
+                        {%for i in listStarships%}
+                            {% set count.value = count.value + 1 %}
+                            <li><a href="{{url_for('about_starship', id=count.value)}}">{{i}}</a></li>
+                        {%endfor%}
+                    </ol>
+                </div>
+            </div>
+        {%endif%}
+        {%if title=='About film'%}
+            <a href="{{url_for('index')}}">Вернуться назад</a>
+            <h3>Информация о фильме {{title_this_film}}:</h3>
+            {%for i,j in film.items()%}
+                <b>{{i}}:</b> {{j}}<br>
+            {%endfor%}
+        {%endif%}
+        {%if title=='About people'%}
+            <a href="{{url_for('index')}}">Вернуться назад</a>
+            <h3>Информация о герое {{name_this_people}}:</h3>
+            {%for i,j in people.items()%}
+                <b>{{i}}:</b> {{j}}<br>
+            {%endfor%}
+        {%endif%}
+        {%if title=='About planet'%}
+            <a href="{{url_for('index')}}">Вернуться назад</a>
+            <h3>Информация о планете {{name_this_planet}}:</h3>
+            {%for i,j in planet.items()%}
+                <b>{{i}}:</b> {{j}}<br>
+            {%endfor%}
+        {%endif%}
+        {%if title=='About starship'%}
+            <a href="{{url_for('index')}}">Вернуться назад</a>
+            <h3>Информация о корабле {{name_this_starship}}:</h3>
+            {%for i,j in starship.items()%}
+                <b>{{i}}:</b> {{j}}<br>
+            {%endfor%}
+        {%endif%}
+		{%endblock%}
+	</body>
+</html>
