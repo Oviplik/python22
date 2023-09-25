@@ -1,0 +1,21 @@
+{% extends "app/base.html" %}
+{% block content %}
+    <b>Username:</b> {{ user.username }}<br>
+    {% if user.is_superuser %}
+        Ваш статус: <b>Администратор</b><br>
+    {% else %}
+        Ваш статус: <b>Пользователь</b><br>
+    {% endif %}
+    <b>Имя:</b> {{ user.first_name }}<br>
+    <b>Фамилия:</b> {{ user.last_name }}<br>
+    <b>Возраст:</b> {{ user.userdata.age }}<br>
+    <b>Адрес электронной почты:</b> {{ user.email }}<br>
+    <b>Пол:</b> {{ user.userdata.gender }}<br>
+    <b>Адрес доставки:</b> {{ user.userdata.adres }}<br>
+    {%if user.userdata.news == True %}
+        Подписка на новости оформлена<br>
+    {% else %}
+        Подписка на новости не оформлена<br>
+    {% endif %}
+
+{% endblock content %}

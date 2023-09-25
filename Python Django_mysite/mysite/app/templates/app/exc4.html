@@ -1,0 +1,23 @@
+{% extends "app/base.html" %}
+{% block content %}
+    <div>
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Задание №4</legend>
+                   <p>
+                        {{data}}
+                        {{ form.year.label }}<br>
+                        {{ form.year }}<br>
+                        {% for error in form.year.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+            <div>
+                <button type="submit">Рассчитать</button>
+            </div>
+
+            </fieldset>
+        </form>
+    </div>
+{% endblock content %}
