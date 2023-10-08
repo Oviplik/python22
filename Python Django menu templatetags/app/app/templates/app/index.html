@@ -1,0 +1,19 @@
+{% extends 'app/base.html' %}
+{% block content %}
+{% load tree_menu %}
+
+{% if menus %}
+{% for menu in menus %}{% endfor %}
+
+{% elif menu_title %}
+
+    {% draw_menu menu_title menu_item %}
+{% endif %}
+
+{% for post in posts %}
+            <h2><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h2>
+                Категория: {{ post.category }}
+            <p>Кратко: {{ post.about }}</p><hr>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+        {%if title%}
+        <title>{{title}}-app</title>
+        {%else%}
+        <title>Welcome to mysite</title>
+        {%endif%}
+    </head>
+    <body>
+        <div>{% if title != 'Main' %}<a href={% url 'index' %}>На главную</a>{% endif %} {% if menus %}{% for menu in menus %}<a href='{{ menu }}'>{{ menu }}</a>{% endfor %}{% endif %}</div>
+        <hr>
+        {%block content%} {%endblock%}
+    </body>
+</html>
