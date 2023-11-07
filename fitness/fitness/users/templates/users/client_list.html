@@ -1,0 +1,71 @@
+{% extends "fitness/base.html" %}
+{% block content %}
+<h1>Список всех клиентов фитнес-клуба:</h1>
+<fieldset class="submenu">
+    <legend>Поиск записей и добавление новых</legend>
+        <form action="{% url 'client-create' %}" method="get" style="float: right;">
+            <input class="sub_submenu" type="submit" value="Добавить клиента" />
+        </form>
+        <form action="{% url 'client-list' %}" method="get" accept-charset="utf-8" style="float: left; padding-top: 5px;">
+            <input type="text" placeholder="ФИО/абонимент/телефон" name="poisk">
+            <span><button type="submit">Найти / Сбросить</button></span>
+        </form>
+        <form action="{% url 'client-list' %}" method="get" style="float: left; margin-left: 25px; padding-top: 5px;">
+        <select name="orderby"/>
+            <option value="id">По умолчанию</option>
+            <option value="lastname">Фамилия</option>
+            <option value="num_contract">Номер контракта</option>
+            <option value="status_membership">Статус абонимента</option>
+            <option value="gender">Пол</option>
+        </select>
+        <input type="submit" value="Сортировать">
+        </form><center><b style="font-size: 25px;">Фитнес-клуб «Богатырь»</b></center>
+</fieldset><br/>
+<table class="list-clients">
+    <tr valign="middle">
+        <th>ID</th>
+        <th>Фамилия</th>
+        <th>Имя</th>
+        <th>Отчество</th>
+        <th>Номер телефона</th>
+        <th>Номер договора</th>
+        <th>Номер карты клуба</th>
+        <th>Дата начала</th>
+        <th>Дата окончания</th>
+        <th>Тип карты клуба</th>
+        <th>Статус карты</th>
+    </tr>
+    {% for client in clients %}
+    <div>
+    <tr valign="middle" style="cursor: pointer;" onclick="window.location.href='{% url 'client-profil' client.id %}'; return false">
+        <td>{{client.id}}</td>
+        <td>{{client.lastname}}</td>
+        <td>{{client.firstname}}</td>
+        <td>{{client.patronymic}}</td>
+        <td>{{client.phone}}</td>
+        <td>{{client.num_contract}}</td>
+        <td>{{client.num_membership}}</td>
+        <td>{{client.date_start_contract}}</td>
+        <td>{{client.date_end_contract}}</td>
+        <td>{{client.type_membership}}</td>
+        <td>{{client.status_membership}}</td>
+    </tr>
+    </div>
+    {% endfor %}
+</table>
+{% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+{% endblock %}

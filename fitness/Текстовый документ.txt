@@ -1,0 +1,80 @@
+import telebot
+import requests
+import sqlite3
+
+bot = telebot.TeleBot('6097961222:AAEoJifOOMfgCrvYiJpvu6Z3kIhIOeWD4ME')
+
+conn = sqlite3.connect('fitness/db.sqlite3', check_same_thread=False)
+cursor = conn.cursor()
+name_client = ''
+time_client = ''
+type_trains = ''
+treners = ''
+phone_client = ''
+
+def db_table_val(user_id_telegram: int, username_telegram: str, user_name_telegram: str, user_name_client: str, user_time_client: str, status: bool, user_phone_client: str, type_train: str, trener: str):
+	cursor.execute('INSERT INTO web_telebot (user_id_telegram, username_telegram, user_name_telegram, user_name_client, user_time_client, status, user_phone_client, type_train, trener) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', (user_id_telegram, username_telegram, user_name_telegram, user_name_client, user_time_client, status, user_phone_client, type_train, trener))
+	conn.commit()
+
+@bot.message_handler(commands=['start'])
+def start_message(message):
+	bot.send_message(message.chat.id, 'Добро пожаловать. Я помогу Вам записаться на тренировку в фитнес-клуб «Богатырь»')
+	bot.send_message(message.chat.id, 'Скажите мне Вашу фамилию и имя для записи на тренировку')
+	bot.register_next_step_handler(message, get_name)
+
+def get_name(message):
+    global name_client
+    name_client = message.text
+    bot.send_message(message.from_user.id, 'Ваш номер телефона для связи')
+    bot.register_next_step_handler(message, get_phone)
+
+def get_phone(message):
+	global phone_client
+	phone_client = message.text
+	bot.send_message(message.from_user.id, 'На какую тренировку вы хотите записаться: персональная или групповая')
+	bot.register_next_step_handler(message, get_type_train)
+
+def get_type_train(message):
+	global type_trains
+	type_trains = message.text
+	if message.text.lower() == 'персональная':
+		bot.send_message(message.from_user.id, 'К какому тренеру вы хотите записаться на персональную тренировку:\nИлья Муромец\nДобрыня Никитич\nАлёша Попович')
+		bot.register_next_step_handler(message, get_trener)
+	elif message.text.lower() == 'групповая':
+		global treners
+		treners = 'Василиса Прекрасная'
+		bot.send_message(message.from_user.id, 'Запись возможна только на эту неделю. На какое время вы хотите записаться:\nПн 19:00\nСр 20:00\nСб 15:00')
+		bot.register_next_step_handler(message, get_time)
+	else:
+		bot.send_message(message.from_user.id, 'Я тебя не понимаю')
+
+def get_trener(message):
+    global treners
+    treners = message.text
+    bot.send_message(message.from_user.id, 'В какой день и на какое время вы хотите записаться')
+    bot.register_next_step_handler(message, get_time)
+
+def get_time(message):
+    global time_client
+    time_client = message.text
+    bot.send_message(message.from_user.id, f'{name_client}, {type_trains} тренировка с {treners}. Дата и время: {time_client}. Номер для связи {phone_client}. Верно?')
+    bot.register_next_step_handler(message, get_sign_up)
+
+def get_sign_up(message):
+	if message.text.lower() == 'да':
+		bot.send_message(message.from_user.id, 'Ваша заявка успешно отправлена менеджеру! Ожидайте ответа')
+		user_id_telegram = message.from_user.id
+		username_telegram = message.from_user.username
+		user_name_telegram = message.from_user.first_name
+		user_name_client = name_client
+		user_time_client = time_client
+		user_phone_client = phone_client
+		type_train = type_trains
+		trener = treners
+
+
+		db_table_val(user_id_telegram=user_id_telegram, username_telegram=username_telegram, user_name_telegram=user_name_telegram, user_name_client=name_client, user_time_client=time_client,
+					 status=False, user_phone_client=phone_client, type_train=type_train, trener=trener)
+
+
+bot.polling(none_stop=True,interval=0)

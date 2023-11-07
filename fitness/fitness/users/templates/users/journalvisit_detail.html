@@ -1,0 +1,44 @@
+{% extends "fitness/base.html" %}
+{% block content %}
+  <article>
+    <img src="{{ object.photo.url }}" width="200px" height="200px">
+    <div>
+      <div>
+        <table>
+          <th colspan="2">Информация</th>
+          <tr>
+            <td>Номер абонимента:</td><td>{{ object.num_membership }}</td>
+          </tr>
+          <tr>
+            <td>Дата начала визита:</td><td>{{ object.date_start_visit }}</td>
+          </tr>
+          <tr>
+            <td>Дата окончания (поле заполнить при завершении посещения):</td><td>{{ object.date_end_visit }}</td>
+          </tr>
+          <tr>
+            <td>Пол</td><td>{{ object.gender }}</td>
+          </tr>
+          <tr>
+            <td>Номер шкафчика:</td><td>{{ object.phone }}</td>
+          </tr>
+          <tr>
+            <td>Дата конца</td><td>{{ object.date_end_contract }}</td>
+          </tr>
+          <tr>
+            <td>Тип абонимента</td><td>{{ object.type_membership }}</td>
+          </tr>
+          <tr>
+            <td>Период действия</td><td>{{ object.time_period }}</td>
+          </tr>
+          <tr>
+            <td>Статус абонимента</td><td>{{ object.status_membership }}</td>
+          </tr>
+        <small>Фото клиента</small>
+      </table>
+      </div>
+        <a href="{% url 'client-update' object.id %}"><input class='edit_prof' type="submit" value="Изменить"></a>
+        <a href="{% url 'client-delete' object.id %}"><input class='del_prof' type="submit" value="Удалить"></a>
+    </div>
+
+  </article>
+{% endblock content %}

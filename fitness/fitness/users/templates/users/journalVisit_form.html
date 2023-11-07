@@ -1,0 +1,58 @@
+{% extends "fitness/base.html" %}
+{% block content %}
+
+<fieldset class="submenu">
+<center><b style="font-size: 25px;">Фитнес-клуб «Богатырь»</b></center>
+</fieldset><br/>
+
+<form method="POST">
+{% csrf_token %}
+    <fieldset>
+        <legend>Отметить посетителя / <a href="{% url 'journal-list' %}">Вернуться назад</a></legend>
+        {% if form.non_field_errors %}
+        <span style="color: red;">
+        {% for field, error_list in form.errors.items %}
+            {% for error in error_list %}
+                {{ error }}
+            {% endfor %}
+        {% endfor %}
+        </span>
+        {% endif %}
+
+        <p>
+            Номер абонимента:<br>
+            {{ form.num_membership }}<br>
+            {% for error in form.num_membership.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            Дата начала визита:<br>
+            {{ form.date_start_visit }}<br>
+            {% for error in form.date_start_visit.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            Дата окончания <span style="color: red;">(заполнить только при закрытии посещения)</span>:<br>
+            {{ form.date_end_visit }}<br>
+            {% for error in form.date_end_visit.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p> Пол:<br>
+            {{ form.gender }}</p>
+        <p>
+        <p>
+            Номер шкафчика:<br>
+            {{ form.locker_number }}<br>
+            {% for error in form.locker_number.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <div>
+            <button type="submit">Сохранить</button>
+        </div>
+    </fieldset>
+</form>
+{% endblock content %}

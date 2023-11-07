@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="{% static 'css/style.css'%}" type="text/css">
+        <link rel="shortcut icon" href="{% static 'img/favicon.ico'%}" type="image/x-icon">
+    <meta charset="UTF-8">
+        {%if title%}
+        <title>{{title}}</title>
+        {%else%}
+        <title>Welcome to FitnessClub</title>
+        {%endif%}
+    </head>
+    <body>
+        <hr/>
+        <div class="main_menu">
+            <form target="_blank" action="{% url 'index' %}" method="get">
+              <input class="sub_main_menu" type="submit" value="Web-сайт" />
+            </form>
+            <form action="{% url 'journal-list' %}" method="get">
+              <input class="sub_main_menu" type="submit" value="Журнал посещений" />
+            </form>
+            <form action="{% url 'client-list' %}" method="get">
+              <input class="sub_main_menu" type="submit" value="Клиенты фитнес-клуба" />
+            </form>
+            <form action="{% url 'archivejournal-list' %}" method="get">
+              <input class="sub_main_menu" type="submit" value="Архив посещений" />
+            </form>
+            <form action="{% url 'trener-list' %}" method="get">
+              <input class="sub_main_menu" type="submit" value="Тренера фитнес-клуба" />
+            </form>
+            <form action="{% url 'train-list' %}" method="get">
+              <input class="sub_main_menu" type="submit" value="Тренировки" />
+            </form>
+            <form action="{% url 'feedback-list' %}" method="get">
+              <input class="sub_main_menu" type="submit" value="Обратный звонок" />
+            </form>
+            <form action="{% url 'telebot-list' %}" method="get">
+              <input class="sub_main_menu" type="submit" value="Телеграм заявки" />
+            </form>
+            <form action="{% url 'post-list' %}" method="get">
+              <input class="sub_main_menu" type="submit" value="Публикации на сайте" />
+            </form>
+        </div>
+        <hr/>
+        {% if messages %}
+        	{% for message in messages %}
+            	{{ message }}
+        	{% endfor %}
+        {% endif %}
+        {%block content%} {%endblock%}
+    </body>
+</html>

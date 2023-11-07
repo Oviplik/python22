@@ -1,0 +1,66 @@
+{% extends "fitness/base.html" %}
+{% block content %}
+<fieldset class="submenu">
+    <legend>Редактирование профиля клиента / <a onclick="history.back()" style="cursor: pointer;">Вернуться назад</a></legend>
+        <form action="{% url 'client-update' object.id %}" method="get" style="float: left;">
+            <input class="sub_submenu" type="submit" value="Изменить" />
+        </form>
+        <form action="{% url 'client-delete' object.id %}" method="get" style="float: left; margin-left: 15px;">
+            <input class="sub_submenu" type="submit" value="Удалить" />
+        </form>
+
+        <center><b style="font-size: 25px;">Фитнес-клуб «Богатырь»</b></center>
+</fieldset><br/>
+
+<table class="client_detail">
+  <tr>
+    <th colspan="2">Информация о клиенте</th>
+    <td rowspan="16" class="photo_client"><img src="{{ object.photo.url }}" width="200px" height="300px"><br/><small>Фото клиента</small></td>
+  </tr>
+  <tr>
+    <td>ФИО клиента</td><td>{{ object.lastname }} {{ object.firstname }} {{ object.patronymic }}</td>
+  </tr>
+  <tr>
+    <td>Дата рождения</td><td>{{ object.birthdate }}</td>
+  </tr>
+  <tr>
+    <td>Паспортные данные</td><td>{{ object.passport }}</td>
+  </tr>
+  <tr>
+    <td>Пол</td><td>{{ object.gender }}</td>
+  </tr>
+  <th colspan="2">Контактные данные</th>
+
+  <tr>
+    <td>Номер телефона</td><td>{{ object.phone }}</td>
+  </tr>
+  <tr>
+    <td>Email</td><td>{{ object.email }}</td>
+  </tr>
+  <th colspan="2">Информация о договоре</th>
+
+  <tr>
+    <td>Номер договора</td><td>{{ object.num_contract }}</td>
+  </tr>
+  <tr>
+    <td>Номер абонимента</td><td>{{ object.num_membership }}</td>
+  </tr>
+  <tr>
+    <td>Дата начала</td><td>{{ object.date_start_contract }}</td>
+  </tr>
+  <tr>
+    <td>Дата конца</td><td>{{ object.date_end_contract }}</td>
+  </tr>
+  <tr>
+    <td>Тип абонимента</td><td>{{ object.type_membership }}</td>
+  </tr>
+  <tr>
+    <td>Период действия</td><td>{{ object.time_period }}</td>
+  </tr>
+  <tr>
+    <td>Статус абонимента</td><td>{{ object.status_membership }}</td>
+  </tr>
+  </td>
+
+</table>
+{% endblock content %}
