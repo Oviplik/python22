@@ -1,9 +1,0 @@
-{%extends 'index.html'%}
-		{%block content%}
-        {%if title=='About film'%}
-            <h3>Информация о фильме {{title_this_film}}</h3>
-            {%for i,j in film.items()%}
-                <b>{{i}}:</b> {{j}}<br>
-            {%endfor%}
-        {%endif%}
-		{%endblock%}
