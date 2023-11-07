@@ -1,9 +1,0 @@
-<ol>
-    {% for item in menu %}
-        {% if item.url %}<li><a href='{{ item.url }}' >{{ item }}</li>
-        {% elif item.title %}<li><a href='{{ item.title }}' >{{ item }}</li>
-        {% else %}{% include 'app/tree_menu.html' with menu=item %}
-        {% endif %}
-    {% endfor %}
-</ol>
-
