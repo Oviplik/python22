@@ -2,7 +2,10 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+import pydot
 
+(graph,) = pydot.graph_from_dot_file('my_project.dot')
+graph.write_png('somefile.png')
 
 def main():
     """Run administrative tasks."""

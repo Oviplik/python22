@@ -5,7 +5,7 @@
 <center><b style="font-size: 25px;">Фитнес-клуб «Богатырь»</b></center>
 </fieldset><br/>
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
 {% csrf_token %}
     <fieldset>
         <legend>Данные клиента / <a onclick="history.back()" style="cursor: pointer;">Вернуться назад</a></legend>
@@ -74,7 +74,7 @@
                         {% endfor %}
                     </p>
                     <p>
-                        Номер абонимента:<br>
+                        Номер абонемента:<br>
                         {{ form.num_membership }}<br>
                         {% for error in form.num_membership.errors %}
                         <span style="color: red;">[{{ error }}]</span>
@@ -87,15 +87,15 @@
                         <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
                     </p>
+<!--                    <p>-->
+<!--                        Дата окончания договора <span style="color: red;">(Оставить пустым! Система сама рассчитает дату)</span>:<br>-->
+<!--                        {{ form.date_end_contract }}<br>-->
+<!--                        {% for error in form.date_end_contract.errors %}-->
+<!--                        <span style="color: red;">[{{ error }}]</span>-->
+<!--                        {% endfor %}-->
+<!--                    </p>-->
                     <p>
-                        Дата окончания договора <span style="color: red;">(Оставить пустым! Система сама рассчитает дату)</span>:<br>
-                        {{ form.date_end_contract }}<br>
-                        {% for error in form.date_end_contract.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </p>
-                    <p>
-                        Тип абонимента:<br>
+                        Тип абонемента:<br>
                         {{ form.type_membership }}<br>
                         {% for error in form.type_membership.errors %}
                         <span style="color: red;">[{{ error }}]</span>
@@ -109,7 +109,7 @@
                         {% endfor %}
                     </p>
                     <p>
-                        Статус абонимента:<br>
+                        Статус абонемента:<br>
                         {{ form.status_membership }}<br>
                         {% for error in form.status_membership.errors %}
                         <span style="color: red;">[{{ error }}]</span>

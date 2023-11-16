@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from .models import Client, journalVisit, ArchiveJournalVisit, Trener, Train
 from django.views.generic import ListView, DetailView, DeleteView, UpdateView, CreateView
 from datetime import timedelta
-from .forms import ClientUpdateForm, journalVisitCreateForm, TrainCreateForm
+from .forms import ClientUpdateForm, journalVisitCreateForm, TrainCreateForm, ClientCreateForm
 from functools import reduce
 import operator
 from django.db.models import Q
@@ -79,8 +79,16 @@ class ClientUpdateView(LoginRequiredMixin,UpdateView):
 
 class ClientCreateView(LoginRequiredMixin,CreateView):
     model = Client
-    fields = ['lastname', 'firstname', 'patronymic', 'phone', 'email', 'num_contract', 'num_membership', 'date_start_contract', 'date_end_contract',
-               'type_membership', 'time_period', 'status_membership', 'birthdate', 'gender', 'passport', 'photo']
+    form_class = ClientCreateForm
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.time_period = form.cleaned_data.get('time_period')
+        self.object.date_start_contract = form.cleaned_data.get('date_start_contract')
+        self.object.date_end_contract = self.object.date_start_contract+timedelta(days=(self.object.time_period*30))
+        self.object.save()
+        return super().form_valid(form)
+
     success_url = 'http://127.0.0.1:8000/users/client-list'
 
 class journalVisitListView(LoginRequiredMixin,ListView):
@@ -97,6 +105,7 @@ class journalVisitListView(LoginRequiredMixin,ListView):
     def get_queryset(self):
         result_search = super(journalVisitListView, self).get_queryset()
         query = self.request.GET.get('num_card')
+
         if query:
             query_list = query.split()
             result_search = result_search.filter(
@@ -112,11 +121,33 @@ class journalVisitCreateView(LoginRequiredMixin,CreateView):
 
     success_url = 'http://127.0.0.1:8000/users/journal-list'
 
+    def get_context_data(self, **kwargs):
+        context = super(journalVisitCreateView, self).get_context_data(**kwargs)
+        context['title'] = 'Посетители в зале'
+        context['num_card_visit'] = self.request.GET.get('num_card_visit')
+        client = Client.objects.filter(num_membership=self.request.GET.get('num_card_visit')).first()
+        if client is not None:
+            context['object'] = client
+        else:
+            context['error_message'] = 'Абонемент не найден в базе!'
+        return context
+
 class journalVisitUpdateView(LoginRequiredMixin,UpdateView):
     model = journalVisit
     form_class = journalVisitCreateForm
 
     success_url = 'http://127.0.0.1:8000/users/journal-list'
+
+    def get_context_data(self, **kwargs):
+        context = super(journalVisitUpdateView, self).get_context_data(**kwargs)
+        context['title'] = 'Посетители в зале'
+        client_visit = journalVisit.objects.filter(id=self.kwargs['pk']).first()
+        client = Client.objects.filter(num_membership=client_visit.num_membership).first()
+        if client:
+            context['num_card_visit_end'] = client.num_membership
+            context['object'] = client
+            context['locker_number_for_end'] = client_visit.locker_number
+        return context
 
 class ArchiveJournalVisitCreateView(LoginRequiredMixin,ListView):
     model = ArchiveJournalVisit

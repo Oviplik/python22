@@ -16,7 +16,7 @@ class Client(models.Model):
     num_membership = models.CharField(max_length=8, blank=False, null=False, unique=True)
     date_start_contract = models.DateField(blank=False, null=False)
     date_end_contract = models.DateField(blank=True, null=False)
-    type_membership = models.CharField(max_length=16, blank=False, null=False, choices=((i, i) for i in ('Безлимитный','Безлимитный')))
+    type_membership = models.CharField(max_length=16, blank=False, null=False, default='Безлимитный')
     time_period = models.IntegerField(blank=False, null=False, unique=False, default=1, choices=((i, i) for i in [1,3,6,12]))
     status_membership = models.CharField(max_length=16, blank=False, null=False, choices=((i, i) for i in ('Активный', 'Не активный')))
     birthdate = models.DateField(blank=False, null=False)
@@ -62,13 +62,13 @@ class journalVisit(models.Model):
         obj = Client.objects.filter(num_membership=num_membership).first()
         if obj:
             if obj.status_membership == 'Не активный':
-                raise ValidationError(f"Абонимент {num_membership} не действителен!")
+                raise ValidationError(f"Абонемент {num_membership} не действителен!")
             elif obj.date_end_contract < date.today():
                 obj.status_membership = 'Не активный'
                 obj.save()
-                raise ValidationError(f"Абонимент {num_membership} не действителен!")
+                raise ValidationError(f"Абонемент {num_membership} не действителен!")
         else:
-            raise ValidationError(f"Абонимент {num_membership} не найден в базе!")
+            raise ValidationError(f"Абонемент {num_membership} не найден в базе!")
 
         super(journalVisit, self).clean()
 
@@ -82,8 +82,7 @@ class journalVisit(models.Model):
         if obj.status_membership == 'Активный':
             super(journalVisit, self).save(*args, **kwargs)
         if date_end_visit:
-            ArchiveJournalVisit.objects.create(num_membership=num_membership, gender=gender,
-                                                           date_start_visit=date_start_visit, date_end_visit=date_end_visit, locker_number=locker_number)
+            ArchiveJournalVisit.objects.create(num_membership=num_membership, gender=gender,date_start_visit=date_start_visit, date_end_visit=date_end_visit, locker_number=locker_number)
             obj_del = journalVisit.objects.filter(num_membership=num_membership).first()
             obj_del.delete()
 
