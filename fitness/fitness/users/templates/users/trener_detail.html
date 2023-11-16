@@ -1,0 +1,87 @@
+{% extends "fitness/base.html" %}
+{% block content %}
+<fieldset class="submenu">
+    <legend>Редактирование профиля тренера / <a onclick="history.back()" style="cursor: pointer;">Вернуться назад</a></legend>
+        <form action="{% url 'trener-update' object.id %}" method="get" style="float: left;">
+            <input class="sub_submenu" type="submit" value="Изменить" />
+        </form>
+        <form action="{% url 'trener-delete' object.id %}" method="get" style="float: left; margin-left: 15px;">
+            <input class="sub_submenu" type="submit" value="Удалить" />
+        </form>
+
+        <center><b style="font-size: 25px;">Фитнес-клуб «Богатырь»</b></center>
+</fieldset><br/>
+<table class="client_detail">
+    <tr>
+      <th colspan="2">Информация о тренере</th>
+      <td rowspan="7" class="photo_client"><img src="{{ object.photo.url }}" width="250px" height="300px"><br/><small>Фото тренера</small></td>
+    </tr>
+    <tr>
+        <td>ФИО тренера</td><td>{{ object.lastnameTrener }} {{ object.firstnameTrener }}</td>
+    </tr>
+    <tr>
+        <td>Тип тренировок</td><td>{{ object.type_trains }}</td>
+    </tr>
+    <tr>
+        <td>Достижения</td><td>{{ object.adwards }}</td>
+    </tr>
+    <th colspan="2">Контактные данные</th>
+    <tr>
+        <td>Номер телефона</td><td>{{ object.phone }}</td>
+    </tr>
+</table>
+{% if trains_soon %}
+<h3>Запись на ближайшие даты:</h3>
+<table class="list-trains">
+<tr valign="middle">
+{% for train in trains_soon %}
+  {% if train.visited == False %}
+    {% if forloop.counter|divisibleby:7 %}
+    <td onclick="window.location.href='{% url 'train-update' train.id %}'; return false">{{ forloop.counter }}. {{ train.membership_or_fio }}<br>
+        {{ train.type_trains }}<br>
+        {{ train.dateTime }}<br>
+        {%if train.visited == True %}Статус: <span style="color: green">Выполнено</span>{% else %}Статус: <span style="color: red">Ожидает</span>{% endif %}
+    </td>
+    </tr>
+    <tr>
+    {% else %}
+    <td onclick="window.location.href='{% url 'train-update' train.id %}'; return false">{{ forloop.counter }}. {{ train.membership_or_fio }}<br>
+        {{ train.type_trains }}<br>
+        {{ train.dateTime }}<br>
+        {%if train.visited == True %}Статус: <span style="color: green">Выполнено</span>{% else %}Статус: <span style="color: red">Ожидает</span>{% endif %}
+    </td>
+    {% endif %}
+  {% endif %}
+{% endfor %}
+</tr>
+</table>
+{% endif %}
+{% if trains %}
+<h3>Успешно проведенные последние 10 тренировок:</h3>
+<table class="list-clients">
+    <tr valign="middle" style="cursor: default;">
+        <th>ID</th>
+        <th>Номер абонемента или ФИО клиента</th>
+        <th>Тип тренировки</th>
+        <th>Дата и время</th>
+        <th>Статус</th>
+    </tr>
+{% for train in trains %}
+    {% if train.visited == True %}
+      {% if forloop.counter <= 10 %}
+
+        <tr valign="middle" style="cursor: default;">
+        <td>{{ train.id }}</td>
+        <td>{{ train.membership_or_fio }}</td>
+        <td>{{ train.type_trains }}</td>
+        <td>{{ train.dateTime }}</td>
+        <td>{%if train.visited == True %}<span style="color: green">Выполнено</span>{% else %}<span style="color: red">Не выполнено</span>{% endif %}</td>
+        </tr>
+
+      {% endif %}
+    {% endif %}
+
+{% endfor %}
+</table>
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,82 @@
+{% extends "fitness/base.html" %}
+{% block content %}
+
+<fieldset class="submenu">
+<center><b style="font-size: 25px;">Фитнес-клуб «Богатырь»</b></center>
+</fieldset><br/>
+
+<form method="POST">
+{% csrf_token %}
+    <fieldset>
+        <legend>Запись на тренировки через Telegram бота / <a onclick="history.back()" style="cursor: pointer;">Вернуться назад</a></legend>
+        <table class="update_client_tab">
+            <tr>
+                <td>
+                    <p>
+                        ID в Telegram:<br>
+                        {{ form.user_id_telegram }}<br>
+                        {% for error in form.user_id_telegram.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        Username в Telegram:<br>
+                        {{ form.username_telegram }}<br>
+                        {% for error in form.username_telegram.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        Имя в Telegram:<br>
+                        {{ form.user_name_telegram }}<br>
+                        {% for error in form.user_name_telegram.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        Фамилия Имя клиента:<br>
+                        {{ form.user_name_client }}<br>
+                        {% for error in form.user_name_client.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        Номер телефона клиента:<br>
+                        {{ form.user_phone_client }}<br>
+                        {% for error in form.user_phone_client.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        Тип тренеровки:<br>
+                        {{ form.type_train }}<br>
+                        {% for error in form.type_train.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        Тренер:<br>
+                        {{ form.trener }}<br>
+                        {% for error in form.trener.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        Дата и время записи:<br>
+                        {{ form.user_time_client }}<br>
+                        {% for error in form.user_time_client.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </p>
+                    <p>
+                        Сделано: {{ form.status }}
+                    </p>
+                    <div>
+                        <button type="submit">Сохранить</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+</form>
+{% endblock content %}

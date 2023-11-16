@@ -1,0 +1,60 @@
+{% extends "fitness/base.html" %}
+{% block content %}
+<h1>Запись на тренировки через Telegram бота:</h1>
+<fieldset class="submenu">
+    <legend>Фильтрация записей</legend>
+        <form action="{% url 'telebot-list' %}" method="get" style="float: left; margin-left: 25px; padding-top: 5px;">
+        <select name="orderby"/>
+            <option value="id">По умолчанию</option>
+            <option value="-id">Дата и время</option>
+            <option value="status">Статус задания</option>
+        </select>
+        <input type="submit" value="Сортировать">
+        </form><center><b style="font-size: 25px;">Фитнес-клуб «Богатырь»</b></center>
+</fieldset><br/>
+<table class="list-clients">
+    <tr valign="middle">
+        <th>ID</th>
+        <th>ID в Telegram</th>
+        <th>Username в Telegram</th>
+        <th>Имя в Telegram</th>
+        <th>Фамилия Имя клиента</th>
+        <th>Номер телефона клиента</th>
+        <th>Тип тренеровки</th>
+        <th>Тренер</th>
+        <th>Время записи</th>
+        <th>Статус</th>
+    </tr>
+    {% for telebot in telebots %}
+    <div>
+    <tr valign="middle" style="cursor: pointer;">
+        <td><a href="https://t.me/{{telebot.username_telegram}}">{{telebot.id}}</a></td>
+        <td><a href="https://t.me/{{telebot.username_telegram}}">{{telebot.user_id_telegram}}</a></td>
+        <td><a href="https://t.me/{{telebot.username_telegram}}">@{{telebot.username_telegram}}</a></td>
+        <td><a href="https://t.me/{{telebot.username_telegram}}">{{telebot.user_name_telegram}}</a></td>
+        <td onclick="window.location.href='{% url 'telebot-update' telebot.id %}'; return false">{{telebot.user_name_client}}</td>
+        <td onclick="window.location.href='{% url 'telebot-update' telebot.id %}'; return false">{{telebot.user_phone_client}}</td>
+        <td onclick="window.location.href='{% url 'telebot-update' telebot.id %}'; return false">{{telebot.type_train}}</td>
+        <td onclick="window.location.href='{% url 'telebot-update' telebot.id %}'; return false">{{telebot.trener}}</td>
+        <td onclick="window.location.href='{% url 'telebot-update' telebot.id %}'; return false">{{telebot.user_time_client}}</td>
+        <td onclick="window.location.href='{% url 'telebot-update' telebot.id %}'; return false">{% if telebot.status == 0 %}<span style="color: red;">Не выполнено</span>{% else %}<span style="color: green;">Сделано</span>{% endif %}</td>
+    </tr>
+    </div>
+    {% endfor %}
+</table>
+{% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+{% endif %}
+{% endblock %}

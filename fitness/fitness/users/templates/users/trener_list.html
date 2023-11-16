@@ -1,0 +1,45 @@
+{% extends "fitness/base.html" %}
+{% block content %}
+<h1>Список тренеров фитнес-клуба:</h1>
+<fieldset class="submenu">
+<center><b style="font-size: 25px;">Фитнес-клуб «Богатырь»</b></center>
+</fieldset><br/>
+<div class="table_list_treners">
+<table class="list-treners">
+    <tr>
+    {% for trener in treners %}
+        {% if forloop.counter|divisibleby:3 %}
+            <td onclick="window.location.href='{% url 'trener-profil' trener.id %}'; return false">
+            <div style="text-align: center;"><br>
+            <img src="../media/{{ trener.photo }}" width="250px" height="300px"/>
+                <h3>Информация о тренере</h3>
+            </div><br>
+            <div style="padding-left: 50px;">
+            <b>Тренер:</b> {{trener.lastnameTrener}} {{trener.firstnameTrener}}<br>
+            <b>Номер телефона:</b> {{trener.phone}}<br>
+            <b>Тип тренеровок:</b> {{trener.type_trains}}<br>
+            <b>Достижения:</b> {{trener.adwards}}<br><br>
+            </div>
+            </td>
+    </tr>
+    <tr>
+        {% else %}
+
+            <td onclick="window.location.href='{% url 'trener-profil' trener.id %}'; return false">
+            <div style="text-align: center;"><br>
+            <img src="../media/{{ trener.photo }}" width="250px" height="300px"/>
+                <h3>Информация о тренере</h3>
+            </div><br>
+            <div style="padding-left: 50px;">
+            <b>Тренер:</b> {{trener.lastnameTrener}} {{trener.firstnameTrener}}<br>
+            <b>Номер телефона:</b> {{trener.phone}}<br>
+            <b>Тип тренеровок:</b> {{trener.type_trains}}<br>
+            <b>Достижения:</b> {{trener.adwards}}<br><br>
+            </div>
+            </td>
+        {% endif %}
+    {% endfor %}
+    </tr>
+</table>
+</div>
+{% endblock %}
